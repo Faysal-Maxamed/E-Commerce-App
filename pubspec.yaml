@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   riverpod: ^2.6.1
   gap: ^3.0.1
+  google_fonts: ^6.2.1
+  line_icons: ^2.0.3
 
 dev_dependencies:
   flutter_test:

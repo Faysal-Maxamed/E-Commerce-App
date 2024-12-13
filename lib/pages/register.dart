@@ -1,11 +1,8 @@
-import 'package:e_comerce/pages/home.dart';
-import 'package:e_comerce/pages/register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +21,15 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Spacer(),
+              Text(
+                "Create  new account",
+                style: TextStyle(
+                    fontSize: 27,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
               const TextField(
                 decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -52,49 +58,46 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gap(20),
-              const Text(
-                "Forgget password",
-                style: TextStyle(color: Colors.white),
+              const TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "confirm password",
+                  prefixIcon: Icon(Icons.lock_outline),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                ),
               ),
-              Gap(20),
+              Gap(40),
               Container(
                 height: 50,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Color(0xff0ACF83),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff0ACF83),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)))),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => HomeScreen()));
-                  },
-                  child: Center(
-                      child: Text(
-                    "sign in",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  )),
-                ),
+                child: Center(
+                    child: Text(
+                  "sign up",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                )),
               ),
               Gap(20),
               Row(
                 children: [
                   Text(
-                    "didn't have an account? ",
+                    "already have an account ",
                     style: TextStyle(color: Colors.white),
                   ),
                   Spacer(),
                   TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => RegisterScreen()));
+                        Navigator.pop(context);
                       },
-                      child: Text("Sign up here"))
+                      child: Text("Sign in"))
                 ],
               )
             ],
