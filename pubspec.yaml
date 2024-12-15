@@ -39,6 +39,7 @@ dependencies:
   gap: ^3.0.1
   google_fonts: ^6.2.1
   line_icons: ^2.0.3
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:
