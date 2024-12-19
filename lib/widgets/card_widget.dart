@@ -1,13 +1,16 @@
-
+import 'package:e_comerce/controller/product_riverpood.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-class cardWidget extends StatelessWidget {
-  const cardWidget({
-    super.key,
-  });
+
+class cardWidget extends ConsumerWidget {
+  const cardWidget({super.key, required this.indexs});
+
+  final int indexs;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final product = ref.watch(ProductRiverpoodProvider);
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
       margin: EdgeInsets.all(12),
@@ -32,7 +35,7 @@ class cardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
               ),
-              child: Image.asset("images/2.png"),
+              child: Image.asset(product[indexs].imageurl),
             ),
           ),
           Container(
@@ -50,35 +53,39 @@ class cardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Air pords",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 16),
+                  product[indexs].title,
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   "Wining Beats sound  ",
-                  style: TextStyle(
-                      fontSize: 13, color: Colors.grey.shade500),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
                   overflow: TextOverflow.ellipsis,
                 ),
                 Gap(4),
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("199"),
+                    Text(product[indexs].price.toString()),
                     Container(
                       height: 40,
                       width: 40,
                       child: Center(
-                        child: Icon(
-                          Icons.add,
+                        child: IconButton(
+                          onPressed: () {
+                            ref
+                                .read(ProductRiverpoodProvider.notifier)
+                                .isselecteditem(product[indexs].id, indexs);
+                          },
+                          icon: Icon(product[indexs].isselected
+                              ? Icons.check
+                              : Icons.add),
                           color: Colors.white,
                         ),
                       ),
                       decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius:
-                              BorderRadius.circular(100)),
+                          borderRadius: BorderRadius.circular(100)),
                     )
                   ],
                 ),

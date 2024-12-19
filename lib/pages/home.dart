@@ -1,4 +1,6 @@
-import 'package:e_comerce/widgets/bottom.dart';
+import 'package:e_comerce/controller/product_riverpood.dart';
+import 'package:e_comerce/pages/details_page.dart';
+import 'package:e_comerce/widgets/bottom_navigation_bar.dart';
 import 'package:e_comerce/widgets/card_widget.dart';
 import 'package:e_comerce/widgets/chip_widget.dart';
 import 'package:e_comerce/widgets/container_widget.dart';
@@ -7,13 +9,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
+final currentindexProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
 class HomeScreen extends ConsumerWidget {
-   HomeScreen({super.key});
-
-  int current = 1;
-
+  HomeScreen({super.key});
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final product = ref.watch(ProductRiverpoodProvider);
+    final currentindexs = ref.watch(currentindexProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -70,30 +75,49 @@ class HomeScreen extends ConsumerWidget {
                 width: double.infinity,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 6,
+                  itemCount: product.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return cardWidget();
+                    return GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DetailsPage(indexs: index))),
+                        child: cardWidget(indexs: index));
                   },
                 ),
               ),
               GridView.builder(
-                  itemCount: 6,
+                  itemCount: product.length,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 260,
-                      child: cardWidget(),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DetailsPage(
+                              indexs: index,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 260,
+                        child: cardWidget(
+                          indexs: index,
+                        ),
+                      ),
                     );
                   })
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Bottom()
+      bottomNavigationBar: bottomNavigationBar(currentindexs: currentindexs),
     );
   }
 }
